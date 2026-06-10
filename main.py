@@ -1,11 +1,22 @@
 """
 main.py — Interface de texto (menu) do Sistema de Figurinhas da Copa.
 
-Junta as classes do projeto e trata as entradas inválidas do usuário.
+Junta todas as classes do projeto e trata as entradas inválidas do usuário.
 Rode com:  python main.py
 """
 
-from dados_exemplo import criar_colecao_exemplo, figurinha_por_id, TOTAL_FIGURINHAS
+from dados_exemplo import (
+    criar_colecao_exemplo,
+    criar_colecao_amigo,
+    figurinha_por_id,
+    TOTAL_FIGURINHAS,
+)
+from historico import Historico
+from trocas import efetuar_troca
+from persistencia import salvar_colecao, carregar_colecao
+from excecoes import ErroFigurinhas
+
+ARQUIVO_PADRAO = "minha_colecao.json"
 
 
 # ---------------------------------------------------------------------- #
@@ -111,21 +122,65 @@ def acao_buscar(colecao):
         print("  >> Opção inválida.")
 
 
+def acao_trocar(colecao, amigo, historico):
+    print("\n--- Troca automática com o amigo ---")
+    print(f"  Você ({colecao.dono}): {colecao.contar_repetidas()} repetidas")
+    print(f"  Amigo ({amigo.dono}): {amigo.contar_repetidas()} repetidas")
+    try:
+        registro = efetuar_troca(colecao, amigo, historico)
+        print("\n  Troca realizada!")
+        print(f"  {registro}")
+    except ErroFigurinhas as erro:
+        print(f"  >> Não foi possível trocar: {erro}")
+
+
+def acao_historico(historico):
+    print("\n--- Histórico de trocas ---")
+    print(historico.listar())
+    print(f"\n  Total de trocas: {historico.quantidade()}")
+
+
+def acao_salvar(colecao):
+    try:
+        salvar_colecao(colecao, ARQUIVO_PADRAO)
+        print(f"\n  Coleção salva em '{ARQUIVO_PADRAO}'.")
+    except OSError as erro:
+        print(f"  >> Erro ao salvar: {erro}")
+
+
+def acao_carregar():
+    """Tenta carregar a coleção do arquivo. Retorna a Colecao ou None."""
+    try:
+        colecao = carregar_colecao(ARQUIVO_PADRAO)
+        print(f"\n  Coleção de '{colecao.dono}' carregada de '{ARQUIVO_PADRAO}'.")
+        return colecao
+    except FileNotFoundError:
+        print(f"  >> Arquivo '{ARQUIVO_PADRAO}' não encontrado.")
+    except (OSError, ValueError, KeyError, ErroFigurinhas) as erro:
+        print(f"  >> Erro ao carregar: {erro}")
+    return None
+
+
 # ---------------------------------------------------------------------- #
 # Menu principal
 # ---------------------------------------------------------------------- #
 MENU = """
 ==================== ALBUM DA COPA 2026 ====================
- 1 - Inserir figurinha     5 - Ver porcentagem
- 2 - Remover figurinha      6 - Ver repetidas
- 3 - Consultar figurinha    7 - Buscar (num/jogador/selecao)
- 4 - Ver album completo     0 - Sair
+ 1 - Inserir figurinha            7 - Buscar (numero/jogador/selecao)
+ 2 - Remover figurinha            8 - Trocar com amigo
+ 3 - Consultar figurinha          9 - Ver historico de trocas
+ 4 - Ver album completo          10 - Salvar colecao (JSON)
+ 5 - Ver porcentagem             11 - Carregar colecao (JSON)
+ 6 - Ver repetidas                0 - Sair
 ===========================================================
 """
 
 
 def main():
     colecao = criar_colecao_exemplo("Voce")
+    amigo = criar_colecao_amigo("Amigo")
+    historico = Historico()
+
     print("Bem-vindo ao Sistema de Figurinhas da Copa!")
     print("(uma coleção de exemplo já foi carregada para você testar)")
 
@@ -147,8 +202,18 @@ def main():
             acao_repetidas(colecao)
         elif opcao == "7":
             acao_buscar(colecao)
+        elif opcao == "8":
+            acao_trocar(colecao, amigo, historico)
+        elif opcao == "9":
+            acao_historico(historico)
+        elif opcao == "10":
+            acao_salvar(colecao)
+        elif opcao == "11":
+            nova = acao_carregar()
+            if nova is not None:
+                colecao = nova
         elif opcao == "0":
-            print("\nAté a próxima!")
+            print("\nAté a próxima! Boa sorte completando o álbum.")
             break
         else:
             print("  >> Opção inválida. Tente novamente.")
