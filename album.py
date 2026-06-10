@@ -47,12 +47,11 @@ class Album:
         return True
 
     def remover(self, id):
-        """Remove a figurinha de número 'id'. Retorna a Figurinha removida ou None."""
         atual = self._cabeca
         anterior = None
         while atual is not None:
             if atual.figurinha.id == id:
-                if anterior is None:          # removendo a cabeça
+                if anterior is None:
                     self._cabeca = atual.proximo
                 else:
                     anterior.proximo = atual.proximo
@@ -60,4 +59,19 @@ class Album:
                 return atual.figurinha
             anterior = atual
             atual = atual.proximo
-        return None  # não encontrou
+        return None
+
+    def ver_completo(self):
+        """Retorna uma string com todas as figurinhas do álbum, em ordem."""
+        if self._cabeca is None:
+            return "(álbum vazio)"
+        linhas = []
+        atual = self._cabeca
+        while atual is not None:
+            linhas.append(str(atual.figurinha))
+            atual = atual.proximo
+        return "\n".join(linhas)
+
+    def porcentagem_concluida(self):
+        """Percentual do álbum já preenchido (0 a 100)."""
+        return (self._tamanho / self.total_figurinhas) * 100
