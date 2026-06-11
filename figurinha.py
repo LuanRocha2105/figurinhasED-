@@ -1,15 +1,5 @@
-"""
-Classe Figurinha — entidade central do sistema.
-
-Cada figurinha representa um jogador ou uma seleção da Copa.
-A validação é feita no próprio construtor para garantir que nunca exista
-uma figurinha em estado inválido dentro das estruturas de dados.
-"""
-
 from excecoes import FigurinhaInvalidaError
 
-# Raridades aceitas. Uso uma tupla (imutável) só para validar a entrada;
-# isso NÃO é uma estrutura de dados do projeto, é apenas uma lista de opções.
 RARIDADES_VALIDAS = ("comum", "rara", "lendaria", "legendaria")
 
 
