@@ -1,11 +1,3 @@
-"""
-Histórico das trocas (e bafos) — usa uma Fila para registrar tudo na ordem
-em que aconteceu (a primeira troca registrada é a primeira a aparecer).
-
-RegistroTroca guarda os detalhes de uma troca entre dois usuários.
-Historico é uma Fila de RegistroTroca (reaproveitando a Fila genérica).
-"""
-
 from datetime import datetime
 from fila import Fila
 
@@ -38,7 +30,7 @@ class Historico:
         self._fila = Fila()
 
     def registrar(self, registro):
-        """Adiciona um RegistroTroca ao final do histórico."""
+        
         self._fila.enqueue(registro)
 
     def quantidade(self):
@@ -48,9 +40,9 @@ class Historico:
         return self._fila.esta_vazia()
 
     def listar(self):
-        """Retorna uma string com todas as trocas, da mais antiga para a mais recente."""
+      
         if self._fila.esta_vazia():
-            return "(nenhuma troca registrada)"
+            return 
         linhas = []
         n = 1
         for registro in self._fila:
