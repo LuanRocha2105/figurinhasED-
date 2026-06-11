@@ -1,11 +1,3 @@
-"""
-Catálogo de figurinhas e dados de exemplo para testar o sistema.
-
-CATALOGO é a lista de TODAS as figurinhas que existem no álbum completo.
-O total dele define os 100% do álbum. Ele é usado apenas como FONTE de dados —
-as figurinhas entram nas estruturas encadeadas uma a uma, pelo método receber().
-"""
-
 from figurinha import Figurinha
 from colecao import Colecao
 
