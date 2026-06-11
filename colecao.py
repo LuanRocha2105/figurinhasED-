@@ -1,13 +1,3 @@
-"""
-Classe Colecao — junta o que um usuário possui:
-  - um Album (figurinhas únicas, em lista encadeada)
-  - uma Fila de repetidas (FIFO)
-
-Quando o usuário ganha uma figurinha, a Colecao decide:
-  - se ele ainda não tem -> vai para o álbum;
-  - se já tem -> vai para a fila de repetidas (a mais antiga sai primeiro nas trocas).
-"""
-
 from album import Album
 from fila import Fila
 from excecoes import FigurinhaDuplicadaError
