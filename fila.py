@@ -1,14 +1,3 @@
-"""
-Classe Fila — implementação própria de fila FIFO (First In, First Out).
-
-Mantemos dois ponteiros:
-  _inicio -> primeiro nó (de onde sai no dequeue)
-  _fim    -> último nó   (onde entra no enqueue)
-
-Guardar o _fim permite enqueue em O(1) (sem percorrer a fila toda).
-Nada de list/deque do Python: tudo com NodoFila encadeados.
-"""
-
 from nodos import NodoFila
 
 
@@ -36,7 +25,7 @@ class Fila:
         self._tamanho += 1
 
     def dequeue(self):
-        """Remove e retorna o elemento do INÍCIO da fila (ou None se vazia)."""
+        
         if self.esta_vazia():
             return None
         nodo = self._inicio
@@ -47,7 +36,7 @@ class Fila:
         return nodo.valor
 
     def peek(self):
-        """Espia o elemento do início SEM remover (ou None se vazia)."""
+       
         if self.esta_vazia():
             return None
         return self._inicio.valor
@@ -59,7 +48,7 @@ class Fila:
         self._tamanho = 0
 
     def __iter__(self):
-        """Permite percorrer a fila (for x in fila) sem remover os elementos."""
+        
         atual = self._inicio
         while atual is not None:
             yield atual.valor
