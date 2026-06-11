@@ -1,10 +1,3 @@
-"""
-main.py — Interface de texto (menu) do Sistema de Figurinhas da Copa.
-
-Junta todas as classes do projeto e trata as entradas inválidas do usuário.
-Rode com:  python main.py
-"""
-
 from dados_exemplo import (
     criar_colecao_exemplo,
     criar_colecao_amigo,
@@ -19,9 +12,6 @@ from excecoes import ErroFigurinhas
 ARQUIVO_PADRAO = "minha_colecao.json"
 
 
-# ---------------------------------------------------------------------- #
-# Funções auxiliares de entrada (tratamento de entradas inválidas)
-# ---------------------------------------------------------------------- #
 def ler_inteiro(mensagem):
     """Lê um inteiro do usuário, repetindo até a entrada ser válida."""
     while True:
@@ -36,9 +26,6 @@ def pausar():
     input("\n(enter para continuar) ")
 
 
-# ---------------------------------------------------------------------- #
-# Ações do menu
-# ---------------------------------------------------------------------- #
 def acao_inserir(colecao):
     print("\n--- Inserir figurinha (pelo número do catálogo) ---")
     id = ler_inteiro("Número da figurinha: ")
@@ -160,20 +147,6 @@ def acao_carregar():
         print(f"  >> Erro ao carregar: {erro}")
     return None
 
-
-# ---------------------------------------------------------------------- #
-# Menu principal
-# ---------------------------------------------------------------------- #
-MENU = """
-==================== ALBUM DA COPA 2026 ====================
- 1 - Inserir figurinha            7 - Buscar (numero/jogador/selecao)
- 2 - Remover figurinha            8 - Trocar com amigo
- 3 - Consultar figurinha          9 - Ver historico de trocas
- 4 - Ver album completo          10 - Salvar colecao (JSON)
- 5 - Ver porcentagem             11 - Carregar colecao (JSON)
- 6 - Ver repetidas                0 - Sair
-===========================================================
-"""
 
 
 def main():
