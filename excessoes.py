@@ -1,12 +1,3 @@
-"""
-Exceções de domínio do sistema de figurinhas.
-
-Centralizar os erros em uma classe base (ErroFigurinhas) deixa o tratamento
-de entradas inválidas mais organizado: no menu basta capturar ErroFigurinhas
-para pegar qualquer erro previsto pela regra de negócio.
-"""
-
-
 class ErroFigurinhas(Exception):
     """Classe base para todos os erros do sistema."""
     pass
